@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyShooting : MonoBehaviour
 {
+
+    //QUELLE: https://www.youtube.com/watch?v=--u20SaCCow
+
     public GameObject bullet;
     public Transform bulletPos;
 
@@ -21,23 +24,26 @@ public class EnemyShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-        float distance = Vector2.Distance(transform.position, player.transform.position); //Ab welcher distanz schießen?
-        Debug.Log(distance);
-
-        if (distance < 10)
+        if (player != null) // Überprüfen, ob der Player noch existiert
         {
-            timer += Time.deltaTime; // Timer hochzählen
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+            Debug.Log(distance);
 
-            if (timer >= 2f) // Prüfen, ob 2 Sekunden vergangen sind
+            if (distance < 10)
             {
-                timer = 0f; // Timer zurücksetzen
-                shoot();
+                timer += Time.deltaTime; // Timer hochzählen
+
+                if (timer >= 2f) // Prüfen, ob 2 Sekunden vergangen sind
+                {
+                    timer = 0f; // Timer zurücksetzen
+                    shoot();
+                }
             }
-
         }
-
+        else
+        {
+            Debug.Log("Player wurde zerstört. Schießen wird gestoppt.");
+        }
     }
 
     void shoot()

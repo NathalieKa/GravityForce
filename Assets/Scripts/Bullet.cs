@@ -6,10 +6,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    //QUELLE: https://www.youtube.com/watch?v=wkKsl1Mfp5M Minute 10 -> Gegner
+    //QUELLE: https://www.youtube.com/watch?v=wkKsl1Mfp5M 
 
     public float speed = 20f;
     public Rigidbody2D rb;
+
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,17 @@ public class Bullet : MonoBehaviour
         //Bullet soll nach vorne fliegen
         rb.velocity = transform.up * speed;
         
+    }
+
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > 5)
+        {
+            Destroy(gameObject);
+        }
     }
 
 

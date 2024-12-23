@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyBulletScript : MonoBehaviour
 {
+
+    //QUELLE: https://www.youtube.com/watch?v=--u20SaCCow
+
     private GameObject player;
     private Rigidbody2D rb;
     public float force;
@@ -30,7 +33,7 @@ public class EnemyBulletScript : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > 10)
+        if (timer > 5)
         {
             Destroy(gameObject);
         }

@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     //QUELLE: https://www.youtube.com/watch?v=wkKsl1Mfp5M
 
 
-    //reference to firePoint Object
+    //referenz zu firePoint Objekt
     public Transform firePoint;
 
     public GameObject bulletPrefab;
@@ -17,13 +17,20 @@ public class Weapon : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetButtonDown("Fire1"))
+      /*  if(Input.GetButtonDown("Fire1"))
         {
             Shoot();
-        }
-
+        }*/
         
     }
+
+
+    public void ButtonPressed()
+    {
+        Shoot();
+    }
+
+
 
     void Shoot()
     {
