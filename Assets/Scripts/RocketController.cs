@@ -42,10 +42,10 @@ public class RocketController : MonoBehaviour
 
     }
 
-    /*FixedUpdate() wird in festen Zeitabst‰nden aufgerufen 
-     * (standardm‰ﬂig alle 0,02 Sekunden oder 50 Mal pro Sekunde), unabh‰ngig von der Bildrate. 
-     * Anwendungsbereich: FixedUpdate() ist ideal f¸r Physikberechnungen wie Bewegung, Kr‰fte und Kollisionen, 
-     * da es zu konsistenten und stabilen Ergebnissen f¸hrt, unabh‰ngig von der Bildrate.*/
+    /*FixedUpdate() wird in festen Zeitabst√§nden aufgerufen 
+     * (standardm√§√üig alle 0,02 Sekunden oder 50 Mal pro Sekunde), unabh√§ngig von der Bildrate. 
+     * Anwendungsbereich: FixedUpdate() ist ideal f√ºr Physikberechnungen wie Bewegung, Kr√§fte und Kollisionen, 
+     * da es zu konsistenten und stabilen Ergebnissen f√ºhrt, unabh√§ngig von der Bildrate.*/
     private void FixedUpdate()
     {
         AddBeschleunigungskraft();
@@ -59,8 +59,8 @@ public class RocketController : MonoBehaviour
         //transform.up = Oberseite des Objekts, also in welche Richtung zeigt er. Oben = (0,1)
         Vector2 motorKraftVector = transform.up * beschleunigungsfaktor * beschleunigungInput; //Kraft des Motors / Beispiel: Ergebnis = (0,6)
 
-        //ForceMode2D.Force = langsam, kontinuierlich beschleunigen //ForceMode2D.Impulse = plˆtzliche Bewegungen
-        //AddForce (Kraft zu einem Rigidbody) = Es ber¸cksichtigt die Masse des Objekts. Es berechnet, wie stark das Objekt beschleunigt wird.
+        //ForceMode2D.Force = langsam, kontinuierlich beschleunigen //ForceMode2D.Impulse = pl√∂tzliche Bewegungen
+        //AddForce (Kraft zu einem Rigidbody) = Es ber√ºcksichtigt die Masse des Objekts. Es berechnet, wie stark das Objekt beschleunigt wird.
         rocketRB.AddForce(motorKraftVector, ForceMode2D.Force);
     }
 

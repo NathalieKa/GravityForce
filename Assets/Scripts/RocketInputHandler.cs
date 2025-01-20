@@ -1,84 +1,120 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RocketInputHandler : MonoBehaviour
 {
-
-    //QUELLE: https://www.youtube.com/watch?v=DVHcOS1E5OQ&list=PLyDa4NP_nvPfmvbC-eqyzdhOXeCyhToko
-
-    //Komponente
     RocketController rocketController;
 
-    private float verticalValue = 0;
-    private float horizontalValue = 0;
+    [Header("Tilt Control Settings")]
+    [SerializeField] private bool useTiltRotation = true;
+    [SerializeField] private float tiltSensitivity = 3f;
+    [SerializeField] private float smoothing = 0.1f;
+    [SerializeField] private float deadzone = 0.1f; // Ignore small tilts
 
+    private float verticalValue = 0;   // For thrust
+    private float horizontalValue = 0;  // For rotation
+    private float currentTiltAngle = 0f;
+    private float targetTiltAngle = 0f;
 
-    /*Es stellt sicher, dass die Referenz (rocketController) verfügbar ist, bevor andere Methoden wie Start() oder Update() sie verwenden.
-     * Methode, die bei der Initialisierung eines GameObjects aufgerufen wird.
-     */
     private void Awake()
     {
         rocketController = GetComponent<RocketController>();
+        // Initialize accelerometer if available
+        if (SystemInfo.supportsAccelerometer)
+        {
+            Input.gyro.enabled = true;
+        }
+    }
+    private void Start()
+    {
+        // Sync motion control state with the singleton
+        useTiltRotation = GameSettings.Instance.motionControl;
+        ToggleTiltControls(useTiltRotation);
     }
 
-    // Methode, die den Wert auf 1 setzt (Button gedrückt)
+
+    // Thrust button methods (unchanged)
     public void SetVerticalValueToOne()
     {
         verticalValue = 1;
     }
 
-    // Methode, die den Wert auf 0 setzt (Button losgelassen)
     public void SetVerticalValueToZero()
     {
         verticalValue = 0;
     }
 
-    //-1.0 bedeutet eine vollständige Bewegung nach links.
+    // Legacy rotation methods - only used when tilt is disabled
     public void SetHorizobtalValueToMinusOne()
     {
-        horizontalValue = -1;
+        if (!useTiltRotation) horizontalValue = -1;
     }
 
-    // Methode, die den Wert auf 0 setzt (Button losgelassen)
     public void SetHorizobtalValueToZero()
     {
-        horizontalValue = 0;
+        if (!useTiltRotation) horizontalValue = 0;
     }
 
-    //1.0 bedeutet eine vollständige Bewegung nach rechts.
     public void SetHorizobtalValueToOne()
     {
-        horizontalValue = 1;
+        if (!useTiltRotation) horizontalValue = 1;
     }
 
 
-
-    // Update is called once per frame
-    void Update()
+    //Uses the singleton to save the state of the tilt control
+    //Singletons are used to ensure that only one instance of a class is created
+    public void ToggleTiltControls(bool enable)
     {
+        useTiltRotation = enable;
 
+        // Update the singleton
+        if (GameSettings.Instance != null)
+        {
+            GameSettings.Instance.motionControl = enable;
+        }
+
+        // Reset motion variables to avoid lingering inputs
+        horizontalValue = 0;
+        currentTiltAngle = 0f;
+        targetTiltAngle = 0f;
+    }
+
+    private void Update()
+    {
         Vector2 inputVector = Vector2.zero;
 
+        if (useTiltRotation && SystemInfo.supportsAccelerometer)
+        {
+            float tiltX = Input.acceleration.x;
 
-        /*Input.GetAxis("Horizontal") gibt einen Wert zwischen -1 und 1 zurück, der die horizontale Eingabe des Spielers repräsentiert.
-         * 
-         * Tastenbelegung wird im Inputmanager definiert!!!
-            
-            vertikal:
-            -1 bedeutet ganz links (z. B. durch die linke Pfeiltaste oder A-Taste).
-            1 bedeutet ganz rechts (z. B. durch die rechte Pfeiltaste oder D-Taste).
-            0 bedeutet keine Bewegung (keine Taste gedrückt). */
+            if (Mathf.Abs(tiltX) > deadzone)
+            {
+                targetTiltAngle = tiltX * tiltSensitivity;
+            }
+            else
+            {
+                targetTiltAngle = 0f;
+            }
 
-        //inputVector.x = Input.GetAxis("Horizontal");
-        //inputVector.y = Input.GetAxis("Vertical");
+            currentTiltAngle = Mathf.Lerp(currentTiltAngle, targetTiltAngle, smoothing);
+            horizontalValue = Mathf.Clamp(currentTiltAngle, -1f, 1f);
+        }
 
         inputVector.x = horizontalValue;
         inputVector.y = verticalValue;
 
-
-
         rocketController.SetInputVector(inputVector);
-        
+    }
+
+    // Optional: Add calibration method
+    public void CalibrateNeutralPosition()
+    {
+        if (SystemInfo.supportsAccelerometer)
+        {
+            // Reset current values
+            currentTiltAngle = 0f;
+            targetTiltAngle = 0f;
+            horizontalValue = 0f;
+        }
     }
 }

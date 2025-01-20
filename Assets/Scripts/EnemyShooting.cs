@@ -24,25 +24,25 @@ public class EnemyShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player != null) // Überprüfen, ob der Player noch existiert
+        if (player != null) // ï¿½berprï¿½fen, ob der Player noch existiert
         {
             float distance = Vector2.Distance(transform.position, player.transform.position);
-            Debug.Log(distance);
+            //Debug.Log(distance);
 
             if (distance < 10)
             {
-                timer += Time.deltaTime; // Timer hochzählen
+                timer += Time.deltaTime; // Timer hochzï¿½hlen
 
-                if (timer >= 2f) // Prüfen, ob 2 Sekunden vergangen sind
+                if (timer >= 2f) // Prï¿½fen, ob 2 Sekunden vergangen sind
                 {
-                    timer = 0f; // Timer zurücksetzen
+                    timer = 0f; // Timer zurï¿½cksetzen
                     shoot();
                 }
             }
         }
         else
         {
-            Debug.Log("Player wurde zerstört. Schießen wird gestoppt.");
+            Debug.Log("Player wurde zerstï¿½rt. Schieï¿½en wird gestoppt.");
         }
     }
 

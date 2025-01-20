@@ -36,7 +36,7 @@ public class RocketHealth : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Überprüfen, ob das Objekt ein Bullet ist
+        // ÃœberprÃ¼fen, ob das Objekt ein Bullet ist
         if (collision.CompareTag("EnemyBullet"))
         {
             TakeDamage(1); //Schaden von 1 Punkt
@@ -62,7 +62,7 @@ public class RocketHealth : MonoBehaviour
     void Die()
     {
         Instantiate(explosion, explosionPos.position, Quaternion.identity); // Explosionsanimation
-        Destroy(gameObject); // Rakete zerstören
+        Destroy(gameObject); // Rakete zerstÃ¶ren
     }
 
 
