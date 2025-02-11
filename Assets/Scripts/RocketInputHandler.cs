@@ -27,9 +27,19 @@ public class RocketInputHandler : MonoBehaviour
     }
     private void Start()
     {
-        // Sync motion control state with the singleton
-        useTiltRotation = GameSettings.Instance.motionControl;
-        ToggleTiltControls(useTiltRotation);
+       //Set UseTiltRotation to the value stored in PlayerPrefs
+         if(PlayerPrefs.GetInt("motionControls") == 1)
+         {
+             useTiltRotation = true;
+         }
+         else if (PlayerPrefs.GetInt("motionControls") == 0)
+         {
+             useTiltRotation = false;
+         }
+         else
+         {
+             useTiltRotation = true;
+         }
     }
 
 
@@ -61,23 +71,6 @@ public class RocketInputHandler : MonoBehaviour
     }
 
 
-    //Uses the singleton to save the state of the tilt control
-    //Singletons are used to ensure that only one instance of a class is created
-    public void ToggleTiltControls(bool enable)
-    {
-        useTiltRotation = enable;
-
-        // Update the singleton
-        if (GameSettings.Instance != null)
-        {
-            GameSettings.Instance.motionControl = enable;
-        }
-
-        // Reset motion variables to avoid lingering inputs
-        horizontalValue = 0;
-        currentTiltAngle = 0f;
-        targetTiltAngle = 0f;
-    }
 
     private void Update()
     {
@@ -106,7 +99,8 @@ public class RocketInputHandler : MonoBehaviour
         rocketController.SetInputVector(inputVector);
     }
 
-    // Optional: Add calibration method
+
+
     public void CalibrateNeutralPosition()
     {
         if (SystemInfo.supportsAccelerometer)

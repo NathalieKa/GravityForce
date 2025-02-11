@@ -15,9 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScreen.unity
     guid: 899699b7e22b0d2429bdb9e435dcbaec
   - enabled: 1
-    path: Assets/Scenes/Settings.unity
+    path: Assets/Scenes/SettingsMenu.unity
     guid: 11dadf24446852e47a42a44650669905
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 6a4809e59f2009a45a75a669a7505e8a
+  - enabled: 1
+    path: Assets/Scenes/DifficultyScene.unity
+    guid: 6ff9a9dc35976e247a9111aeb0496c38
   m_configObjects: {}

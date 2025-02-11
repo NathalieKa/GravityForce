@@ -22,6 +22,16 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+    // Difficulty selection
+    // 0 = easy
+    // 1 = medium
+    // 2 = hard
+    public void SelectDifficulty(int difficulty)
+    {
+        PlayerPrefs.SetInt("difficulty", difficulty);
+        SwitchScene("MainMenu");
+    }
     public void ExitGame()
     {
         Application.Quit();

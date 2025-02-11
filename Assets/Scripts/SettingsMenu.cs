@@ -1,28 +1,34 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] private Toggle motionControlsToggle; // Assign in the inspector
+    //Default value for motion controls
+    //Uses int instead of bool because player prefs dont support bools
+    //0 = false
+    //1 = true
+    private const int MotionControls = 1;
 
-    private void Start()
+
+    public void SetMotionControls()
     {
-        // Initialize the toggle state from the singleton
-        if (GameSettings.Instance != null)
+        //If motion controls are enabled, disable them
+        if (PlayerPrefs.GetInt("motionControls") == 1)
         {
-            motionControlsToggle.isOn = GameSettings.Instance.motionControl;
+            PlayerPrefs.SetInt("motionControls", 0);
         }
-
-        // Add a listener to handle toggle changes
-        motionControlsToggle.onValueChanged.AddListener(OnMotionControlToggleChanged);
-    }
-
-    private void OnMotionControlToggleChanged(bool isOn)
-    {
-        // Update the singleton state
-        if (GameSettings.Instance != null)
+        //If motion controls are disabled# enable them
+        else if(PlayerPrefs.GetInt("motionControls") == 0)
         {
-            GameSettings.Instance.motionControl = isOn;
+            PlayerPrefs.SetInt("motionControls", 1);
         }
+        else
+        {
+            //If no value is set, set it to the default value
+            PlayerPrefs.SetInt("motionControls", MotionControls);
+        }
+        Debug.Log(PlayerPrefs.GetInt("motionControls"));
     }
 }
