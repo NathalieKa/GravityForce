@@ -13,6 +13,20 @@ public class Weapon : MonoBehaviour
 
     public GameObject bulletPrefab;
 
+
+    Cooldown cooldown;
+
+
+
+    void Start()
+    {
+        cooldown = GetComponent<Cooldown>();
+        // oder, falls noch nicht vorhanden:
+        if (cooldown == null)
+        {
+            cooldown = gameObject.AddComponent<Cooldown>();
+        }
+    }
     
     void Update()
     {
@@ -27,7 +41,17 @@ public class Weapon : MonoBehaviour
 
     public void ButtonPressed()
     {
-        Shoot();
+        if (!cooldown.isCoolingDown)
+        {
+            Shoot();
+            cooldown.StartCoolDown();
+        }
+        else
+        {
+            Debug.Log("Waffe kühlt ab");
+        }
+
+
     }
 
 
@@ -39,6 +63,9 @@ public class Weapon : MonoBehaviour
         Die Position und Rotation der Kugel wird von firePoint übernommen*/
 
         //Wir müssen den Bullet dementsprechend rotieren z = 90 in firePoint, weil bei der Erzeugung (Bullet) die Rotation von firepoint übernommen wird. 
+
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+
     }
 }
