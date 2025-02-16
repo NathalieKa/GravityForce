@@ -8,6 +8,9 @@ TagManager:
   - Gegner1
   - EnemyBullet
   - RocketBullet
+  - Gegner2
+  - Wand
+  - tilemap
   layers:
   - Default
   - TransparentFX

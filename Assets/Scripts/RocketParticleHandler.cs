@@ -50,7 +50,7 @@ public class RocketParticleHandler : MonoBehaviour
     {
 
         //Verringert die particle über zeit
-        particleAnzahl = Mathf.Lerp(particleAnzahl, 0, Time.deltaTime * 0.6f);
+       // particleAnzahl = Mathf.Lerp(particleAnzahl, 0, Time.deltaTime * 0.6f);
         emissionModuleFire.rateOverTime = particleAnzahl;
 
        

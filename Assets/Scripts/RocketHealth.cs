@@ -16,46 +16,64 @@ public class RocketHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public float damageDuration = 0.3f;
+    private Color defaultColor = Color.white;
+    public Color damageColor;
+    private float damageTime;
+    SpriteRenderer sr;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
 
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-
-        
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        if(Time.time >= damageTime){
+            sr.color = defaultColor;
+        }
+
 
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Überprüfen, ob das Objekt ein Bullet ist
+        // Überprüfe, ob die Rakete von einem EnemyBullet 
         if (collision.CompareTag("EnemyBullet"))
         {
-            TakeDamage(1); //Schaden von 1 Punkt
+            TakeDamage(1); // Schaden von 1 Punkt
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.name == "Tilemap" || collision.gameObject.name == "Gegner1" || collision.gameObject.name == "Gegner2")
+        {
+            TakeDamage(1);
+         
+        }   
+       
+    }
 
     void TakeDamage(int damage)
     {
 
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        ApplyDamageColor();
 
         if (currentHealth <= 0)
         {
             Die();
         }
-
-
 
     }
 
@@ -63,6 +81,13 @@ public class RocketHealth : MonoBehaviour
     {
         Instantiate(explosion, explosionPos.position, Quaternion.identity); // Explosionsanimation
         Destroy(gameObject); // Rakete zerstören
+    }
+
+    void ApplyDamageColor()
+    {
+        sr.color = damageColor;
+        damageTime = Time.time + damageDuration;
+
     }
 
 
