@@ -11,6 +11,7 @@ TagManager:
   - Gegner2
   - Wand
   - tilemap
+  - Audio
   layers:
   - Default
   - TransparentFX

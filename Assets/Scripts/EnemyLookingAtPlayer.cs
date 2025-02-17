@@ -23,6 +23,7 @@ public class EnemyLookingAtPlayer : MonoBehaviour
     void Update()
     {
 
+
         // Überprüfe, ob das Ziel noch existiert
         if (target == null)
         {
@@ -31,16 +32,23 @@ public class EnemyLookingAtPlayer : MonoBehaviour
             return;
         }
 
+
+        float distance = Vector2.Distance(transform.position, target.transform.position);
+
         transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
 
-        // Berechne den Richtungsvektor von diesem Objekt zur Rakete
-        Vector3 direction = target.position - transform.position;
+        if (distance < 6)
+        {
 
-        // Berechne den Winkel (in Grad) relativ zur x-Achse
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            // Berechne den Richtungsvektor von diesem Objekt zur Rakete
+            Vector3 direction = target.position - transform.position;
 
-        // Setze die Rotation um die z-Achse (für 2D-Spiele)
-        transform.rotation = Quaternion.AngleAxis(angle + 270f, Vector3.forward);
+            // Berechne den Winkel (in Grad) relativ zur x-Achse
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            // Setze die Rotation um die z-Achse (für 2D-Spiele)
+            transform.rotation = Quaternion.AngleAxis(angle + 270f, Vector3.forward);
+        }
 
     }
 }

@@ -10,12 +10,17 @@ public class Weapon : MonoBehaviour
 
     //referenz zu firePoint Objekt
     public Transform firePoint;
-
     public GameObject bulletPrefab;
-
 
     Cooldown cooldown;
 
+    Audiomanager audiomanager;
+
+
+    private void Awake()
+    {
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
+    }
 
 
     void Start()
@@ -63,7 +68,7 @@ public class Weapon : MonoBehaviour
         Die Position und Rotation der Kugel wird von firePoint übernommen*/
 
         //Wir müssen den Bullet dementsprechend rotieren z = 90 in firePoint, weil bei der Erzeugung (Bullet) die Rotation von firepoint übernommen wird. 
-
+        audiomanager.PlayerSFX(audiomanager.shooting);
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
 

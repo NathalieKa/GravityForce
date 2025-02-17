@@ -20,9 +20,13 @@ public class RocketParticleHandler : MonoBehaviour
 
     ParticleSystem.EmissionModule emissionModuleFire;
 
+    Audiomanager audiomanager;
+
 
     private void Awake()
     {
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
+
         controller = GetComponent<RocketController>(); //Zugriff auf den RocketController
 
         particleSystemFire = GetComponent<ParticleSystem>(); //Zugriff auf ParticleSystem 
@@ -59,10 +63,12 @@ public class RocketParticleHandler : MonoBehaviour
     public void PressedBoostButton()
     {
         particleAnzahl = 30;
+        audiomanager.PlayerSFX(audiomanager.rocketEngine);
     }
 
     public void NotpressedBoostButton()
     {
         particleAnzahl = 0;
+        audiomanager.StopEngineSound();
     }
 }

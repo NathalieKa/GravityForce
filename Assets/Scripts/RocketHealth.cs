@@ -10,10 +10,8 @@ public class RocketHealth : MonoBehaviour
     public int maxHealth = 4;
     public int currentHealth; //aktuelles Leben
 
-
     public GameObject explosion;
     public Transform explosionPos;
-
     public HealthBar healthBar;
 
     public float damageDuration = 0.3f;
@@ -22,6 +20,12 @@ public class RocketHealth : MonoBehaviour
     private float damageTime;
     SpriteRenderer sr;
 
+    Audiomanager audiomanager;
+
+    private void Awake()
+    {
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -65,10 +69,11 @@ public class RocketHealth : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-
+        audiomanager.PlayerSFX(audiomanager.damageTaken);
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
         ApplyDamageColor();
+        
 
         if (currentHealth <= 0)
         {
@@ -79,6 +84,8 @@ public class RocketHealth : MonoBehaviour
 
     void Die()
     {
+        audiomanager.PlayerSFX(audiomanager.death);
+        audiomanager.PlayerSFX(audiomanager.gameOver);
         Instantiate(explosion, explosionPos.position, Quaternion.identity); // Explosionsanimation
         Destroy(gameObject); // Rakete zerstören
     }

@@ -13,6 +13,19 @@ public class EnemyShooting : MonoBehaviour
     private float timer;
     private GameObject player;
 
+
+    Audiomanager audiomanager;
+
+
+
+    private void Awake()
+    {
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
+    }
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +42,7 @@ public class EnemyShooting : MonoBehaviour
             float distance = Vector2.Distance(transform.position, player.transform.position);
             //Debug.Log(distance);
 
-            if (distance < 10)
+            if (distance < 8)
             {
                 timer += Time.deltaTime; // Timer hochz�hlen
 
@@ -48,6 +61,8 @@ public class EnemyShooting : MonoBehaviour
 
     void shoot()
     {
+        audiomanager.PlayerSFX(audiomanager.shooting);
         Instantiate(bullet, bulletPos.position, Quaternion.identity); // Klonen des Bullet-Objekts
+
     }
 }
