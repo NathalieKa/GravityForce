@@ -56,6 +56,9 @@ public class EnemyShooting : MonoBehaviour
         else
         {
             Debug.Log("Player wurde zerst�rt. Schie�en wird gestoppt.");
+
+            //Disable the script to stop the enemy from shooting and stop thousands of debug.logs
+            this.enabled = false;
         }
     }
 

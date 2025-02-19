@@ -12,6 +12,7 @@ TagManager:
   - Wand
   - tilemap
   - Audio
+  - GameManager
   layers:
   - Default
   - TransparentFX

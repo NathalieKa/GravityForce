@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("difficulty", difficulty);
         SwitchScene("MainMenu");
     }
+
     public void ExitGame()
     {
         Application.Quit();

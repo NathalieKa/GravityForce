@@ -38,7 +38,7 @@ public class EnemyHealth2 : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Überprüfen, ob das Objekt ein Bullet ist
+        // ÃœberprÃ¼fen, ob das Objekt ein Bullet ist
         if (collision.CompareTag("RocketBullet"))
         {
             TakeDamage(); //Schaden

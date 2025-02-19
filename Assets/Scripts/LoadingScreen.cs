@@ -17,19 +17,27 @@ public class LoadingScreen : MonoBehaviour
         StartCoroutine(LoadingGame());
     }
 
+    //Difficulty Easy = 0
+    //Difficulty Medium = 1
+    //Difficulty Hard = 2
     IEnumerator LoadingGame()
     {
         Debug.Log("Started loading coroutine");
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("TEST");
 
-        try
+        int difficulty = PlayerPrefs.GetInt("difficulty");
+        switch (difficulty)
         {
-            SceneManager.LoadScene("Game");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Failed to load scene: {e.Message}");
+            case 0:
+                SceneManager.LoadScene("Game0");
+                break;
+            case 1:
+                SceneManager.LoadScene("Game1");
+                break;
+            case 2:
+                SceneManager.LoadScene("Game2");
+                break;
+
         }
     }
 }
