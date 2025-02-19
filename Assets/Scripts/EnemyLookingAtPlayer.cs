@@ -37,7 +37,7 @@ public class EnemyLookingAtPlayer : MonoBehaviour
 
         transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
 
-        if (distance < 6)
+        if (distance < 8)
         {
 
             // Berechne den Richtungsvektor von diesem Objekt zur Rakete
