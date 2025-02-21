@@ -9,9 +9,16 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!rocket) return;
+        if (!rocket || !rocket.gameObject.activeInHierarchy) return;
         // Follow the rocket's X and Y position while keeping the Z position constant
-        transform.position = new Vector3(rocket.position.x + offset.x, rocket.position.y + offset.y, transform.position.z);
+        Vector3 newPos = new Vector3(rocket.position.x + offset.x, rocket.position.y + offset.y, transform.position.z);
+        if (!float.IsNaN(newPos.x) && !float.IsNaN(newPos.y)) {
+            transform.position = newPos;
+        } else {
+            Debug.LogWarning("Calculated camera position contains NaN values.");
+        }
+    
+
 
         // Keep the camera rotation upright (no rotation changes)
         transform.rotation = Quaternion.identity;

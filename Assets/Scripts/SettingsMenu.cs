@@ -9,11 +9,11 @@ public class SettingsMenu : MonoBehaviour
     //Uses int instead of bool because player prefs dont support bools
     //0 = false
     //1 = true
-    private const int MotionControls = 1;
-
 
     public void SetMotionControls()
     {
+        Debug.Log("Motion Controls" + PlayerPrefs.GetInt("motionControls"));
+
         //If motion controls are enabled, disable them
         if (PlayerPrefs.GetInt("motionControls") == 1)
         {
@@ -27,8 +27,8 @@ public class SettingsMenu : MonoBehaviour
         else
         {
             //If no value is set, set it to the default value
-            PlayerPrefs.SetInt("motionControls", MotionControls);
+            PlayerPrefs.SetInt("motionControls", 1);
         }
-        Debug.Log(PlayerPrefs.GetInt("motionControls"));
+        Debug.Log("Motion Controls" + PlayerPrefs.GetInt("motionControls"));
     }
 }

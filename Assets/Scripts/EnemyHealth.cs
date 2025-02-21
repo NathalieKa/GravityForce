@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     
     public GameObject explosion;
-    private int maxHealth = 4;
+    private int maxHealth = 2;
 
 
     public float damageDuration = 0.3f;

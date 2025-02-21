@@ -176,7 +176,7 @@ public class GameOverManager : MonoBehaviour
         // Disable all other UI elements except the game over container
         foreach (Transform child in mainCanvas.transform)
         {
-            if (child.gameObject != gameOverContainer)
+            if (child.gameObject != gameOverContainer&&child.gameObject.name != "background")
             {
                 child.gameObject.SetActive(false);
             }

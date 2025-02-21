@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 /*
@@ -11,33 +12,36 @@ using UnityEngine.SceneManagement;
  */
 public class LoadingScreen : MonoBehaviour
 {
+    [SerializeField] private Image loadingImage;
+    private Sprite[] loadingSprites;
+
     void Start()
     {
-        Debug.Log("LoadingScreen Start called");
+        // Load all sprites at start
+        loadingSprites = new Sprite[8];
+        for (int i = 1; i <= 8; i++)
+        {
+            loadingSprites[i-1] = Resources.Load<Sprite>("Textures/LoadingScreen/L" + i );
+        }
         StartCoroutine(LoadingGame());
     }
 
-    //Difficulty Easy = 0
-    //Difficulty Medium = 1
-    //Difficulty Hard = 2
     IEnumerator LoadingGame()
     {
-        Debug.Log("Started loading coroutine");
-        yield return new WaitForSeconds(1.5f);
+        for (int i = 0; i < loadingSprites.Length; i++)
+        {
+            if (loadingSprites[i] != null)
+            {
+                loadingImage.sprite = loadingSprites[i];
+                yield return new WaitForSeconds(0.2f);
+            }
+            else
+            {
+                Debug.LogError($"Failed to load sprite L{i+1}");
+            }
+        }
 
         int difficulty = PlayerPrefs.GetInt("difficulty");
-        switch (difficulty)
-        {
-            case 0:
-                SceneManager.LoadScene("Game0");
-                break;
-            case 1:
-                SceneManager.LoadScene("Game1");
-                break;
-            case 2:
-                SceneManager.LoadScene("Game2");
-                break;
-
-        }
+        SceneManager.LoadScene($"Game{difficulty}");
     }
 }

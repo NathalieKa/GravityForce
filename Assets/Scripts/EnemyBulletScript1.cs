@@ -11,7 +11,7 @@ public class EnemyBulletScript1 : MonoBehaviour
     private Rigidbody2D rb;
     public float force;
 
-    // Neuer Winkel-Offset (in Grad), standardmäßig 0
+    // Neuer Winkel-Offset (in Grad), standardmaessig 0
     public float angleOffset = 0f;
 
     private float timer;
@@ -24,7 +24,7 @@ public class EnemyBulletScript1 : MonoBehaviour
 
         // Basisrichtung: vom Schuss zum Spieler
         Vector3 direction = player.transform.position - transform.position;
-        // Rotieren der Richtung um den gewünschten Offset
+        // Rotieren der Richtung um einen Offset
         direction = Quaternion.Euler(0, 0, angleOffset) * direction;
         rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
 

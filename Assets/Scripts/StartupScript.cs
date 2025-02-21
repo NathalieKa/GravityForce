@@ -8,6 +8,14 @@ public class StartupScript : MonoBehaviour
     void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
+        if(PlayerPrefs.GetInt("motionControls")!=0 && PlayerPrefs.GetInt("motionControls")!=1)
+        {
+            PlayerPrefs.SetInt("motionControls", 1);
+        }
+        if (PlayerPrefs.GetInt("difficulty")!>=0 && PlayerPrefs.GetInt("difficulty")!<=2)
+        {
+            PlayerPrefs.SetInt("difficulty", 0);
+        }
     }
 
     // Update is called once per frame

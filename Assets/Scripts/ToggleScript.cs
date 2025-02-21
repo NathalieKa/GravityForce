@@ -6,17 +6,22 @@ using UnityEngine.UI;
 
 public class ToggleScript : MonoBehaviour
 {
-   //This script is only for the toggle button in the settings men
-   //This is not supposed to be used for anything else
-   //This isnt a good solution for the full settings menu as that would require
-   //individual scripts for each setting
+   //This script sets the MotionControls to be on or off depending on the Value set in the PlayerPrefs
+   //This way you can check if its on or not by looking at the toggle instead of playing the game
 
-   //However, this is a good example of how to use a toggle button
-
-   [SerializeField] private Toggle toggle;
+   [SerializeField] public Toggle toggle;
    void Start()
    {
-
+      if (PlayerPrefs.GetInt("motionControls") == 1)
+      {
+         toggle.isOn = true;
+      }
+      else if(PlayerPrefs.GetInt("motionControls") == 0)
+      {
+         toggle.isOn = false;
+      }
+      else
+      {toggle.isOn = true;}
    }
 
    public void OnPointerClick(PointerEventData eventData)
