@@ -8,7 +8,7 @@ public class EnemyHealth2 : MonoBehaviour
 
     public GameObject explosion;
 
-    private int maxHealth = 5;
+    private int maxHealth = 6;
 
     public float damageDuration = 0.3f;
     private Color defaultColor = Color.white;
