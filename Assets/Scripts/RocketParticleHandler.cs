@@ -14,9 +14,9 @@ public class RocketParticleHandler : MonoBehaviour
     ParticleSystem particleSystemFire;
 
     /*emissionModuleFire ist eine Referenz auf das EmissionModule des particleSystemFire,
-     * also den Bereich des Partikelsystems, der die Emissionsrate (wie viele Partikel ausgestoßen werden) steuert.
+     * also den Bereich des Partikelsystems, der die Emissionsrate (wie viele Partikel ausgestoï¿½en werden) steuert.
      * Das EmissionModule wird verwendet, um zu kontrollieren, wie viele Partikel pro Sekunde erzeugt werden, 
-     * was besonders bei der Anpassung der Partikelmenge nützlich ist.*/
+     * was besonders bei der Anpassung der Partikelmenge nï¿½tzlich ist.*/
 
     ParticleSystem.EmissionModule emissionModuleFire;
 
@@ -52,23 +52,21 @@ public class RocketParticleHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Verringert die particle über zeit
+        //Verringert die particle ï¿½ber zeit
        // particleAnzahl = Mathf.Lerp(particleAnzahl, 0, Time.deltaTime * 0.6f);
         emissionModuleFire.rateOverTime = particleAnzahl;
-
-       
     }
 
     public void PressedBoostButton()
     {
         particleAnzahl = 30;
-        audiomanager.PlayerSFX(audiomanager.rocketEngine);
+        audiomanager.PlayEngineSound();
     }
 
     public void NotpressedBoostButton()
     {
         particleAnzahl = 0;
         audiomanager.StopEngineSound();
+
     }
 }

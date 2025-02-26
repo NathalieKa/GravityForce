@@ -8,7 +8,7 @@ public class Cooldown : MonoBehaviour
     //  QUELLE: https://www.youtube.com/watch?v=5r6RmddoR80
 
 
-    private float cooldownTime = 1f;
+    private float cooldownTime = 0.6f;
     private float nextFireTime;
 
     public bool isCoolingDown => Time.time < nextFireTime;

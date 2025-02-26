@@ -5,21 +5,32 @@ using UnityEngine;
 
 public class FuelScript : MonoBehaviour
 {
-    [SerializeField]
-    public TextMeshProUGUI fuelText;
-    [SerializeField]
-    public float fuel = 100f;
-    [SerializeField]
-    private float fuelBurnRate = 0.5f;
+    [SerializeField] public TextMeshProUGUI fuelText;
+    [SerializeField] public float fuel = 100f;
+    [SerializeField] public float fuelBurnRate = 0.5f;
     private bool boostDown = false;
+
+    private float maxFuel;
+
+    void Awake()
+    {
+        maxFuel = fuel;
+        UpdateFuelDisplay();
+    }
 
     void Update()
     {
-        if (boostDown)  // Changed while to if
+        if (boostDown)
         {
             BurnFuel();
         }
-        fuelText.text = "Fuel: " + fuel.ToString("F0") + "%";
+        UpdateFuelDisplay();
+    }
+
+    private void UpdateFuelDisplay()
+    {
+        float fuelPercentage = (fuel / maxFuel) * 100;
+        fuelText.text = "Fuel: " + fuelPercentage.ToString("F0") + "%";
     }
 
     public void setBoostDown()

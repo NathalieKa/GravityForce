@@ -8,6 +8,9 @@ public class GameOverManager : MonoBehaviour
 {
     public static GameOverManager Instance { get; private set; }
 
+    [SerializeField] private GameManager gameManager;
+
+
     [Header("Game Over Text Settings")]
     [SerializeField] private string gameOverMessage = "GAME OVER";
     [SerializeField] private float fontSize = 72f;
@@ -184,6 +187,7 @@ public class GameOverManager : MonoBehaviour
 
         gameOverContainer.SetActive(true);
         StartCoroutine(FlashText());
+        gameManager.DeleteScore();  // Reset the score
     }
 
     // Coroutine to flash the game over text between two colors

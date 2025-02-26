@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Audiomanager : MonoBehaviour
 {
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
+    private AudioSource engineSource; // Dedicated source for engine sounds
 
     public AudioClip background;
     public AudioClip death;
@@ -16,34 +16,49 @@ public class Audiomanager : MonoBehaviour
     public AudioClip victory;
     public AudioClip rocketEngine;
 
+    void Awake()
+    {
+        // Create a separate audio source for engine sounds
+        engineSource = gameObject.AddComponent<AudioSource>();
+        // Copy any important settings from SFXSource if needed
+        engineSource.volume = SFXSource.volume;
+        engineSource.spatialBlend = SFXSource.spatialBlend;
+    }
 
     void Start()
     {
         musicSource.clip = background;
         musicSource.Play();
-        
+        musicSource.loop = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-
+    // Play regular one-shot sound effects
     public void PlayerSFX(AudioClip clip)
     {
         SFXSource.PlayOneShot(clip);
     }
 
-    public void StopEngineSound()
+    // Handle engine sound specifically
+    public void PlayEngineSound()
     {
-        if (SFXSource.isPlaying)
+        if (!engineSource.isPlaying)
         {
-            SFXSource.Stop();
+            engineSource.clip = rocketEngine;
+            engineSource.loop = true;
+            engineSource.Play();
         }
     }
 
-
-
+    public void StopEngineSound()
+    {
+        if (engineSource.isPlaying)
+        {
+            engineSource.Stop();
+        }
+    }
 }

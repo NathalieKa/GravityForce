@@ -20,26 +20,20 @@ public class RocketInputHandler : MonoBehaviour
     {
         rocketController = GetComponent<RocketController>();
         // Initialize accelerometer if available
-        if (SystemInfo.supportsAccelerometer)
+        Input.gyro.enabled = true;
+        //Set UseTiltRotation to the value stored in PlayerPrefs
+        if(PlayerPrefs.GetInt("motionControls") == 1)
         {
-            Input.gyro.enabled = true;
+            useTiltRotation = true;
         }
-    }
-    private void Start()
-    {
-       //Set UseTiltRotation to the value stored in PlayerPrefs
-         if(PlayerPrefs.GetInt("motionControls") == 1)
-         {
-             useTiltRotation = true;
-         }
-         else if (PlayerPrefs.GetInt("motionControls") == 0)
-         {
-             useTiltRotation = false;
-         }
-         else
-         {
-             useTiltRotation = true;
-         }
+        else if (PlayerPrefs.GetInt("motionControls") == 0)
+        {
+            useTiltRotation = false;
+        }
+        else
+        {
+            useTiltRotation = true;
+        }
     }
 
 
@@ -76,7 +70,7 @@ public class RocketInputHandler : MonoBehaviour
     {
         Vector2 inputVector = Vector2.zero;
 
-        if (useTiltRotation && SystemInfo.supportsAccelerometer)
+        if (useTiltRotation)
         {
             float tiltX = Input.acceleration.x;
 
@@ -103,12 +97,8 @@ public class RocketInputHandler : MonoBehaviour
 
     public void CalibrateNeutralPosition()
     {
-        if (SystemInfo.supportsAccelerometer)
-        {
-            // Reset current values
             currentTiltAngle = 0f;
             targetTiltAngle = 0f;
             horizontalValue = 0f;
-        }
     }
 }
