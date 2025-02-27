@@ -6,6 +6,7 @@ using UnityEngine.UI; //store slider in a variable
 public class HealthBar : MonoBehaviour
 {
 
+    //Autor:Kascha
     //QUELLE: https://www.youtube.com/watch?v=BLfNP4Sc_iA
 
     public Slider slider;

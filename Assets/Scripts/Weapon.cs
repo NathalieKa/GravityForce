@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Autor: Kascha
 public class Weapon : MonoBehaviour
 {
 
@@ -53,7 +54,7 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            Debug.Log("Waffe kühlt ab");
+            Debug.Log("Waffe kï¿½hlt ab");
         }
 
 
@@ -65,9 +66,9 @@ public class Weapon : MonoBehaviour
     {
         //shooting logic
         /*Instantiate() wird verwendet, um eine neue Instanz der bulletPrefab-Kugel zu erzeugen.
-        Die Position und Rotation der Kugel wird von firePoint übernommen*/
+        Die Position und Rotation der Kugel wird von firePoint ï¿½bernommen*/
 
-        //Wir müssen den Bullet dementsprechend rotieren z = 90 in firePoint, weil bei der Erzeugung (Bullet) die Rotation von firepoint übernommen wird. 
+        //Wir mï¿½ssen den Bullet dementsprechend rotieren z = 90 in firePoint, weil bei der Erzeugung (Bullet) die Rotation von firepoint ï¿½bernommen wird. 
         audiomanager.PlayerSFX(audiomanager.shooting);
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 

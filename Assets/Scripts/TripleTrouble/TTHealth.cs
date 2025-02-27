@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth2 : MonoBehaviour
+//Autor: Kascha
+//Carbon copy of SSHelath.cs
+public class TTHealth : MonoBehaviour
 {
     // Start is called before the first frame update
 

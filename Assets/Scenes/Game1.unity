@@ -586,6 +586,11 @@ MonoBehaviour:
   detectionDistance: 7
   maxChaseDistance: 11
   maxChaseTime: 5
+  raycastDistance: 1
+  avoidanceForce: 2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &298110157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,6 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907808ccedec4d647a73a686884e1a02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rocketHealth: {fileID: 973444124}
   gameManager: {fileID: 326485538}
   gameWonMessage: LEVEL COMPLETE
   fontSize: 140
@@ -2616,7 +2622,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 6
   m_WholeNumbers: 0
-  m_Value: 4
+  m_Value: 6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3392,7 +3398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1614000591}
   - component: {fileID: 1614000592}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthbarNew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3611,7 +3617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721325590}
   - component: {fileID: 1721325589}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4009,7 +4015,7 @@ GameObject:
   - component: {fileID: 1851648261}
   - component: {fileID: 1851648260}
   - component: {fileID: 1851648259}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4134,7 +4140,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -20275,7 +20281,7 @@ Tilemap:
   - first: {x: 1108, y: 678, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 5
+      m_TileIndex: 6
       m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
@@ -76394,8 +76400,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: fcae5c3692e994247938cfc7baa822f3, type: 2}
   - m_RefCount: 4470
     m_Data: {fileID: 11400000, guid: d287150d53d3d425f8f84d2034d5e349, type: 2}
-  - m_RefCount: 2731
+  - m_RefCount: 2730
     m_Data: {fileID: 11400000, guid: dcfda4d3f1a6241d4854c76d2b8ef393, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 7aafb558115e9654db04ef4c01cfbc1a, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 5
     m_Data: {fileID: -6212091817297008591, guid: ae1a2736aa5694e8bbcae01a54cd353b, type: 3}
@@ -76451,7 +76459,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
   m_Size: {x: 1154, y: 790, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -77107,6 +77115,11 @@ MonoBehaviour:
   detectionDistance: 7
   maxChaseDistance: 11
   maxChaseTime: 5
+  raycastDistance: 1
+  avoidanceForce: 2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &1962212027
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyBulletScript1 : MonoBehaviour
 {
 
+
+    // Autor: Kascha
     //QUELLE: https://www.youtube.com/watch?v=--u20SaCCow
 
     private GameObject player;

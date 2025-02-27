@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShooting2 : MonoBehaviour
+//Autor: Kascha
+
+public class TTShoot : MonoBehaviour
 {
     //QUELLE: https://www.youtube.com/watch?v=--u20SaCCow
 
@@ -54,7 +56,7 @@ public class EnemyShooting2 : MonoBehaviour
 
     void Shoot()
     {
-
+        //Dieser Gegner der TT oder Triple Trouble schießt drei Schüsse
         audiomanager.PlayerSFX(audiomanager.shooting);
 
         // Geradeaus

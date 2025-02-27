@@ -6,12 +6,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+// Author: Dilek
 public class GameManager : MonoBehaviour
 {
+    //GameManager is NOT Singleton and can exist more then once
+    //Its a collection of methods that are utilized in almost every scene
+    //It does permanently save certain values even across sessions but only where playerprefs exist
+
     private int Score;
     private int HighScore;
     public TextMeshProUGUI ScoreText;
 
+    //Checks wether or not these values exists in the playerprefs and sets them to 0 if not
     private void Awake()
     {
         if(PlayerPrefs.HasKey("HighScore") == false)
@@ -45,15 +52,19 @@ public class GameManager : MonoBehaviour
             ScoreText.text = "Score: " + Score;
         }
     }
+    //Helper function to call on buttons
     public void SwitchScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
 
+
     public void DeleteScore()
     {
         PlayerPrefs.SetInt("Score", 0);
     }
+
+
     public void AddScore(int score)
     {
         Score += score;
@@ -72,7 +83,7 @@ public class GameManager : MonoBehaviour
     public void SelectDifficulty(int difficulty)
     {
         PlayerPrefs.SetInt("difficulty", difficulty);
-        SwitchScene("MainMenu");
+        SwitchScene("LoadingScreen");
     }
 
     public void ExitGame()

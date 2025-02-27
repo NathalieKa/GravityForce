@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Author: korte
+//This class was supposed to just worry about wether or not the player was colliding with one of the Packages
+//However this quickly balooned into a very large script that could definetly use a breakup and responsibility change
+//But given the small scope of our game this class can stay
+
+//This class now takes car of detecting packages within a radius around the player
+//         Makes packages within the radius glow and glow brighter as the player gets closer
+//         Makes packages interactable with touch
+//         Adds a virutal Tether between the Rocket and the Package as an added Challenge and a cool way to collect it instead of just a text
+
+
 public class RocketPackageCollider : MonoBehaviour
 {
     [Header("Package Detection")]
@@ -56,6 +67,7 @@ public class RocketPackageCollider : MonoBehaviour
         // Store the initial count of packages for tracking
         totalInitialPackages = Package.Length;
 
+        // GameWonManager related code can mostly be ignored as it is mostly no longer used
         // Find the GameWonManager if not assigned in inspector
         if (gameWonManager == null)
         {
@@ -75,6 +87,7 @@ public class RocketPackageCollider : MonoBehaviour
         HandleTouchInput();
     }
 
+    //This method isnt exactly efficent but it allows us to dynamically make packages glow based on distance
     void UpdateGlowVisibility()
     {
         foreach (GameObject package in Package)
@@ -106,6 +119,7 @@ public class RocketPackageCollider : MonoBehaviour
         }
     }
 
+    //This function allows the packages to be touched or clicked
     void HandleTouchInput()
     {
         // Check for touch input
@@ -137,6 +151,10 @@ public class RocketPackageCollider : MonoBehaviour
         }
     }
 
+    //This method adds the virtual tether mentioned earlier
+    //The strength of this tether makes it quite difficult to actually detach it but its possible
+    //We wanted the strength to be quite high because this is supposed to only be an issue
+    //If the player moves very fast through the level which is risky anyway due to the extra damage if you smash into the wall fast
     void AttachPackageToRocket(GameObject package)
     {
         // If we already have a package attached, detach it first
@@ -177,7 +195,7 @@ public class RocketPackageCollider : MonoBehaviour
         packageRigidbody.drag = packageDrag;
     }
 
-    // Optional: Add method to visualize the detection radius in the editor
+    // method to visualize the detection radius in the editor
     void OnDrawGizmosSelected()
     {
         if (rocketTransform != null)
@@ -227,7 +245,7 @@ public class RocketPackageCollider : MonoBehaviour
             glowRenderers.Remove(package);
         }
 
-        // Add debugging to verify package count and delivery
+        //  debugging to verify package count and delivery
         Debug.Log($"Package delivered. Packages remaining: {Package.Length}, Packages delivered: {packagesDelivered}/{totalInitialPackages}");
 
         // Check if all packages are delivered
@@ -239,6 +257,7 @@ public class RocketPackageCollider : MonoBehaviour
         // Double-check that our counts match
         if (Package.Length == 0 && packagesDelivered == totalInitialPackages)
         {
+            //again mostly deprecated
             // Ensure we have the GameWonManager reference
             if (gameWonManager == null)
             {

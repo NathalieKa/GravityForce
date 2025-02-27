@@ -5,8 +5,9 @@ using UnityEngine;
 public class EnemyLookingAtPlayer : MonoBehaviour
 {
 
-    [SerializeField]
-    private Transform target;
+    //Autor: Kascha
+
+    [SerializeField] private Transform target;
 
     public float amp;
     public float freq;
@@ -24,17 +25,18 @@ public class EnemyLookingAtPlayer : MonoBehaviour
     {
 
 
-        // Überprüfe, ob das Ziel noch existiert
+        // ï¿½berprï¿½fe, ob das Ziel noch existiert
         if (target == null)
         {
-            // Optional: Skript deaktivieren, falls target zerstört wurde
+            // Optional: Skript deaktivieren, falls target zerstï¿½rt wurde
             enabled = false;
             return;
         }
 
-
+        //Get the distance betwen the player and the enemy
         float distance = Vector2.Distance(transform.position, target.transform.position);
 
+        //uhhh
         transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
 
         if (distance < 6)
@@ -46,7 +48,7 @@ public class EnemyLookingAtPlayer : MonoBehaviour
             // Berechne den Winkel (in Grad) relativ zur x-Achse
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-            // Setze die Rotation um die z-Achse (für 2D-Spiele)
+            // Setze die Rotation um die z-Achse (fuer 2D-Spiele)
             transform.rotation = Quaternion.AngleAxis(angle + 270f, Vector3.forward);
         }
 

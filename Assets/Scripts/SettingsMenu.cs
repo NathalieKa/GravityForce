@@ -3,6 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Author: Korte
+
 public class SettingsMenu : MonoBehaviour
 {
     //Default value for motion controls

@@ -4,15 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-/*
- * This class is going to be mostly boilerplate and empty until we actually
- * implement some sort of loading logic or when we start to animate the
- * loading screen with the dots. Until then this will just be a one and a half second timer.
- */
+//Author: Korte
 public class LoadingScreen : MonoBehaviour
 {
     [SerializeField] private Image loadingImage;
+    [SerializeField] private AudioSource audioSource; // Add reference to AudioSource
+    [SerializeField] private AudioClip spriteChangeSound; // Add reference to the sound clip
     private Sprite[] loadingSprites;
 
     void Start()
@@ -23,6 +20,15 @@ public class LoadingScreen : MonoBehaviour
         {
             loadingSprites[i-1] = Resources.Load<Sprite>("Textures/LoadingScreen/L" + i );
         }
+
+        // Check if AudioSource component exists
+        if (audioSource == null)
+        {
+            // Add AudioSource component if it doesn't exist
+            audioSource = gameObject.AddComponent<AudioSource>();
+            Debug.Log("AudioSource component added automatically");
+        }
+
         StartCoroutine(LoadingGame());
     }
 
@@ -33,6 +39,17 @@ public class LoadingScreen : MonoBehaviour
             if (loadingSprites[i] != null)
             {
                 loadingImage.sprite = loadingSprites[i];
+
+                // Play sound when sprite changes
+                if (audioSource != null && spriteChangeSound != null)
+                {
+                    audioSource.PlayOneShot(spriteChangeSound);
+                }
+                else if (spriteChangeSound == null)
+                {
+                    Debug.LogWarning("No sound clip assigned to spriteChangeSound");
+                }
+
                 yield return new WaitForSeconds(0.2f);
             }
             else

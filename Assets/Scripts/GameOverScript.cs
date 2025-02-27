@@ -6,6 +6,10 @@ using System.Collections;
 
 public class GameOverManager : MonoBehaviour
 {
+    //Autor: Korte
+    //This class ended up being quite big mostly due to how i wanted to mostly dynamically generate it
+    //to be able to quickly change things with code
+
     public static GameOverManager Instance { get; private set; }
 
     [SerializeField] private GameManager gameManager;
@@ -45,11 +49,13 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private TextAlignmentOptions buttonTextAlignment = TextAlignmentOptions.Center;
     [SerializeField] private TMP_FontAsset buttonCustomFont;
 
+
     private Canvas mainCanvas;
     private GameObject gameOverContainer;
     private TextMeshProUGUI gameOverText;
 
     // Singleton pattern to ensure only one instance of the GameOverManager exists
+    // In this case a Singleton is actually necessary to prevent stackings across scenes
     private void Awake()
     {
         if (Instance == null)
@@ -77,7 +83,7 @@ public class GameOverManager : MonoBehaviour
 
     private void CreateGameOverUI()
     {
-        // Create container
+        // Create container to hold all necessary UI ELements
         gameOverContainer = new GameObject("GameOver Container");
         gameOverContainer.transform.SetParent(mainCanvas.transform, false);
 
@@ -133,6 +139,7 @@ public class GameOverManager : MonoBehaviour
         buttonRect.sizeDelta = buttonSize;
         buttonRect.anchoredPosition = new Vector2(xOffset, -buttonYOffset);  // Position from bottom
 
+        //Button config
         Button button = buttonObj.AddComponent<Button>();
         Image buttonImage = buttonObj.AddComponent<Image>();
         buttonImage.color = buttonColor;
@@ -195,6 +202,7 @@ public class GameOverManager : MonoBehaviour
     {
         while (true)
         {
+            //Did not know PingPong existed but im glad it exists lmao
             float t = Mathf.PingPong(Time.time * flashSpeed, 1f);
             gameOverText.color = Color.Lerp(flashColor1, flashColor2, t);
             yield return null;

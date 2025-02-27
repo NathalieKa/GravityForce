@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBulletScript : MonoBehaviour
+public class SSBullet : MonoBehaviour
 {
-
+    //Autor: Kascha
     //QUELLE: https://www.youtube.com/watch?v=--u20SaCCow
 
     private GameObject player;

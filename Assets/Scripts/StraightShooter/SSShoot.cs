@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShooting : MonoBehaviour
-{
+//Authors: Korte, Kascha
 
-    //QUELLE: https://www.youtube.com/watch?v=--u20SaCCow
+public class SSShoot : MonoBehaviour
+{
+    //This class was initally just about shooting at the player if its in range
+    //But we added a line of sight check to make the enemy more intelligent and dont shoot at walls
+    //The enemy will only shoot if the player is in range and in line of sight
+    //We achieved this by casting a line from the enemy to the player and checking if the player is hit and a layermask is used to only check for the player and the map
 
     public GameObject bullet;
     public Transform bulletPos;
@@ -17,13 +21,10 @@ public class EnemyShooting : MonoBehaviour
     Audiomanager audiomanager;
 
 
-
     private void Awake()
     {
         audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
     }
-
-
 
 
     // Start is called before the first frame update

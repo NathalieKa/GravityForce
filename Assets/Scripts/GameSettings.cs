@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Author: Korte
+//This script doesnt get used anywhere is deprecated
+//Kept for referemce
 public class GameSettings : MonoBehaviour
 {
     public static GameSettings Instance { get; private set; }

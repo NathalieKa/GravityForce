@@ -4,9 +4,11 @@ using System.Collections;
 
 public class BackButtonHandler : MonoBehaviour
 {
+    //Autor Korte
+
     private bool backPressedOnce = false;
     private float backPressTime = 0f;
-    public float backPressThreshold = 2f; // Time window to detect second press
+    public float backPressThreshold = 2f; // Time window to detect second press in seconds
 
     // This is a simple back button handler for Android
     // It will load the MainMenu scene when the back button is pressed twice within a short time window
@@ -16,7 +18,7 @@ public class BackButtonHandler : MonoBehaviour
         {
             if (backPressedOnce && (Time.time - backPressTime) < backPressThreshold)
             {
-                SceneManager.LoadScene("MainMenu"); // Replace with your actual scene name
+                SceneManager.LoadScene("MainMenu");
             }
             else
             {

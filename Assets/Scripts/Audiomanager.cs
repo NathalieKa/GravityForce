@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Audiomanager : MonoBehaviour
 {
+    //Autor Kascha und Korte
+
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
     private AudioSource engineSource; // Dedicated source for engine sounds

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Authors: Korte, Kascha
+
 public class EnemyMovement : MonoBehaviour
 {
-    //QUELLE:https://www.youtube.com/watch?v=kvQ-QWDWWZI&t=1s
-
     public float amp;
     public float freq;
 
@@ -15,6 +15,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float detectionDistance = 8f; // Erkennungsreichweite wie im Shooting-Script
     [SerializeField] private float maxChaseDistance = 10f; // Maximale Verfolgungsdistanz
     [SerializeField] private float maxChaseTime = 5f; // Maximale Verfolgungszeit in Sekunden
+    [SerializeField] private float raycastDistance = 1.0f; // Distanz für Raycast-Prüfungen
+    [SerializeField] private float avoidanceForce = 2.0f; // Stärke der Ausweichbewegung
+    [SerializeField] private LayerMask obstacleLayer; // Layer für Hindernisse (Tilemap)
 
     private int pointsIndex;
     private Vector3 basePos; // Basisposition, die sich zwischen den Punkten bewegt
@@ -23,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
     private float chaseTimer = 0f;
     private Vector3 startChasePos; // Position, an der die Verfolgung begann
     private bool lineOfSight = false;
+    private Rigidbody2D rb;
 
     void Start()
     {
@@ -30,6 +34,22 @@ public class EnemyMovement : MonoBehaviour
         basePos = Points[pointsIndex].position;
         transform.position = basePos;
         player = GameObject.FindGameObjectWithTag("Rocket");
+        rb = GetComponent<Rigidbody2D>();
+
+        // Falls kein Rigidbody vorhanden ist, fügen wir einen hinzu
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 0;
+            rb.freezeRotation = true;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        }
+
+        // Setze obstacle Layer, falls nicht manuell zugewiesen
+        if (obstacleLayer == 0)
+        {
+            obstacleLayer = 1 << LayerMask.NameToLayer("Default");
+        }
     }
 
     void Update()
@@ -62,14 +82,24 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
+        // Berechne den Sinusoffset (z.B. in Y-Richtung)
+        Vector3 sinOffset = new Vector3(0, Mathf.Sin(Time.time * freq) * amp, 0);
+
+        // Aktualisiere die tatsächliche Position
+        transform.position = basePos + sinOffset;
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 movementDirection = Vector3.zero;
+
         if (isChasing && player != null)
         {
             // Während der Verfolgung
             chaseTimer += Time.deltaTime;
 
-            // Bewege direkt zum Spieler
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-            basePos += direction * chaseSpeed * Time.deltaTime;
+            // Richtung zum Spieler
+            movementDirection = (player.transform.position - transform.position).normalized;
 
             // Beende die Verfolgung, wenn die maximale Zeit oder Distanz erreicht ist
             float chasedDistance = Vector3.Distance(startChasePos, transform.position);
@@ -93,11 +123,14 @@ public class EnemyMovement : MonoBehaviour
 
                 pointsIndex = closestPointIndex;
             }
+
+            // Wende Hindernisvermeidung an
+            movementDirection = AvoidObstacles(movementDirection) * chaseSpeed;
         }
         else
         {
             // Normale Patrouillen-Bewegung zwischen Punkten
-            basePos = Vector2.MoveTowards(basePos, Points[pointsIndex].position, moveSpeed * Time.deltaTime);
+            movementDirection = (Points[pointsIndex].position - transform.position).normalized;
 
             // Prüfe, ob der Punkt (nahezu) erreicht wurde
             if (Vector2.Distance(basePos, Points[pointsIndex].position) < 0.01f)
@@ -105,16 +138,64 @@ public class EnemyMovement : MonoBehaviour
                 // Zum nächsten Punkt wechseln (Zyklus wiederholen)
                 pointsIndex = (pointsIndex + 1) % Points.Length;
             }
+
+            // Wende Hindernisvermeidung auch im Patrouillenmodus an
+            movementDirection = AvoidObstacles(movementDirection) * moveSpeed;
         }
 
-        // Berechne den Sinusoffset (z.B. in Y-Richtung)
-        Vector3 sinOffset = new Vector3(0, Mathf.Sin(Time.time * freq) * amp, 0);
-
-        // Setze die tatsächliche Position als Summe der Basisposition und des Sinusoffsets
-        transform.position = basePos + sinOffset;
+        // Bewege die Basis-Position
+        basePos += movementDirection * Time.fixedDeltaTime;
     }
 
-    // Optional: Visuelle Darstellung im Editor
+    // Fixing the type mismatch in the AvoidObstacles method
+private Vector3 AvoidObstacles(Vector3 currentDirection)
+{
+    // Erstelle ein Array von Richtungen zum Prüfen
+    Vector2[] directions = new Vector2[]
+    {
+        currentDirection,                                       // Geradeaus
+        Quaternion.Euler(0, 0, 45) * currentDirection,         // 45° rechts
+        Quaternion.Euler(0, 0, -45) * currentDirection,        // 45° links
+        Quaternion.Euler(0, 0, 90) * currentDirection,         // 90° rechts
+        Quaternion.Euler(0, 0, -90) * currentDirection,        // 90° links
+    };
+
+    // Die resultierende Richtung
+    Vector3 resultDirection = currentDirection;
+
+    // Raycasts in verschiedene Richtungen ausführen
+    Debug.DrawRay(transform.position, currentDirection * raycastDistance, Color.red);
+
+    for (int i = 0; i < directions.Length; i++)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directions[i], raycastDistance, obstacleLayer);
+        Debug.DrawRay(transform.position, directions[i] * raycastDistance, Color.blue);
+
+        if (hit.collider != null)
+        {
+            // Konvertiere transform.position von Vector3 zu Vector2 für die Berechnung
+            Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
+            Vector2 avoidanceDir = (position2D - hit.point).normalized;
+
+            float weight = 1.0f - (hit.distance / raycastDistance); // Je näher, desto stärker ausweichen
+
+            // Gewichtung nach Richtungsindex - geradeaus hat Priorität
+            if (i == 0) weight *= 1.5f;
+
+            // Konvertiere avoidanceDir zurück zu Vector3 für die Addition
+            resultDirection += new Vector3(avoidanceDir.x, avoidanceDir.y, 0) * weight * avoidanceForce;
+        }
+        else if (i == 0) // Wenn kein Hindernis direkt vor uns ist, bevorzuge diese Richtung
+        {
+            resultDirection += currentDirection * 0.5f;
+        }
+    }
+
+    // Normalisiere die resultierende Richtung
+    return resultDirection.normalized;
+}
+
+    // Visuelle Darstellung im Editor
     private void OnDrawGizmosSelected()
     {
         // Zeige den Erkennungsradius an
@@ -124,5 +205,9 @@ public class EnemyMovement : MonoBehaviour
         // Zeige die maximale Verfolgungsdistanz an
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, maxChaseDistance);
+
+        // Zeige die Raycast-Distanz an
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, raycastDistance);
     }
 }

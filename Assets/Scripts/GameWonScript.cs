@@ -4,9 +4,18 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
+
+//Author: Korte
+//This class is a carbon copy of GameOverScript
+//GameOverScript came first and this is essentially the same with minor differences
+//It would be possible to merge both scripts into a GenerateUI Script but because we only have
+//3 Gamestates its fine to leave it like this
+//For more comments and info look at GameOverScript
 public class GameWonManager : MonoBehaviour
 {
     public static GameWonManager Instance { get; private set; }
+
+    [SerializeField] public RocketHealth rocketHealth;  // Reference to the rocket health script to make it invulnerable when you win the game
 
     [SerializeField] private GameManager gameManager;
 
@@ -236,6 +245,7 @@ public class GameWonManager : MonoBehaviour
                 child.gameObject.SetActive(false);
             }
         }
+        rocketHealth.currentHealth = 999;
 
         gameWonContainer.SetActive(true);
         StartCoroutine(FlashText());
@@ -264,12 +274,17 @@ public class GameWonManager : MonoBehaviour
         switch (currentScene)
         {
             case "Game0":
+                PlayerPrefs.SetInt("difficulty", 1);
                 SceneManager.LoadScene("Game1");
                 break;
             case "Game1":
+                PlayerPrefs.SetInt("difficulty", 2);
                 SceneManager.LoadScene("Game2");
                 break;
             case "Game2":
+                PlayerPrefs.SetInt("difficulty", 0);
+                SceneManager.LoadScene("Game0");
+                break;
             default:
                 SceneManager.LoadScene("MainMenu");
                 break;

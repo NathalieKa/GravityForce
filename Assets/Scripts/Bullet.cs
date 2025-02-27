@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
+    //Autor: Kascha
     //QUELLE: https://www.youtube.com/watch?v=wkKsl1Mfp5M 
 
     public float speed = 20f;
@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
     }
 
 
-    //Wenn unser Bullet trifft etwas
+    //Wenn die Bullet mit etwas collided zum debuggen
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
         Debug.Log(hitInfo.name);

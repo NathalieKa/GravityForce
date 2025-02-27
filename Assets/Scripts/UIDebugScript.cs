@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+//Author Korte
+
 public class DebugScript : MonoBehaviour
 {
     //This is a DebugScript to find issues with either

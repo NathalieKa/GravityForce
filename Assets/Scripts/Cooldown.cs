@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cooldown : MonoBehaviour
 {
-
+    // Autor : Kascha
     //  QUELLE: https://www.youtube.com/watch?v=5r6RmddoR80
 
 

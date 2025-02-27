@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Author: Kascha
 public class RocketParticleHandler : MonoBehaviour
 {
 
     float particleAnzahl = 0;
 
-    //Komponente
+    //Komponenten
     RocketController controller;
-
-
     ParticleSystem particleSystemFire;
 
     /*emissionModuleFire ist eine Referenz auf das EmissionModule des particleSystemFire,

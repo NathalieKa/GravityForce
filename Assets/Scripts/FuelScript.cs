@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class FuelScript : MonoBehaviour
 {
+    //Autor: Korte
+
     [SerializeField] public TextMeshProUGUI fuelText;
-    [SerializeField] public float fuel = 100f;
+    [SerializeField] public float fuel = 100f;  //Default Value of 100 but we change this on a level by level basis
     [SerializeField] public float fuelBurnRate = 0.5f;
     private bool boostDown = false;
 
-    private float maxFuel;
+    private float maxFuel;  //only used to calculate the percentage that gets displayed
 
     void Awake()
     {
@@ -20,6 +22,7 @@ public class FuelScript : MonoBehaviour
 
     void Update()
     {
+        //While the boost button isheld down keep burning fuel
         if (boostDown)
         {
             BurnFuel();
@@ -29,6 +32,7 @@ public class FuelScript : MonoBehaviour
 
     private void UpdateFuelDisplay()
     {
+        //Convert to percentage cus thats easier for players to understand
         float fuelPercentage = (fuel / maxFuel) * 100;
         fuelText.text = "Fuel: " + fuelPercentage.ToString("F0") + "%";
     }
@@ -48,6 +52,7 @@ public class FuelScript : MonoBehaviour
         if (fuel > 0)
         {
             fuel -= fuelBurnRate * Time.deltaTime;
+            //Time.deltaTime so we dont burn more fuel if weve got a higher framerate
         }
     }
 }

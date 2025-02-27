@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class DeliveryZone : MonoBehaviour
 {
-    [SerializeField] private int scoreValue = 100;
+
+    //Autor: Korte
+
+    [SerializeField] private int scoreValue = 100;  //Score to add per Package
     [SerializeField] private float destroyDelay = 1.0f; // Time before package disappears after delivery
     [SerializeField] private RocketPackageCollider rocketController;
     [SerializeField] private GameManager gameManager;
@@ -18,6 +21,7 @@ public class DeliveryZone : MonoBehaviour
         }
 
         // If rocketController is not set in inspector, try to find it in scene
+        // Should no longer be necessary but well keep it as a failsafe
         if (rocketController == null)
         {
             rocketController = FindObjectOfType<RocketPackageCollider>();

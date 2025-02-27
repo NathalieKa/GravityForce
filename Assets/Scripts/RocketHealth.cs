@@ -28,16 +28,16 @@ public class RocketHealth : MonoBehaviour
 
     private void Awake()
     {
-        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         sr = GetComponent<SpriteRenderer>();
 
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        audiomanager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audiomanager>();
+    }
+
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
