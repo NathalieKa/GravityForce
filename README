@@ -1,0 +1,19 @@
+Voraussetzungen
+
+Unity (Version 2022.3.52f1)
+Git installiert (git-scm.com)
+
+Installation
+1. Repository klonen
+bashgit clone https://github.com/DEIN-USER/repository-name.git
+2. Unity-Projekt einrichten
+
+Wichtig: Dieses Repository enthält nur die Ordner Assets/ und ProjectSettings/. Diese müssen in ein bestehendes Unity-Projekt eingefügt werden.
+
+
+Erstelle ein neues Unity-Projekt oder öffne ein bestehendes.
+Schließe Unity.
+Navigiere zum Unity-Projektordner auf deinem PC.
+Kopiere die Ordner Assets/ und ProjectSettings/ aus dem geklonten Repository in deinen Unity-Projektordner.
+Überschreibe die bestehenden Ordner, wenn du danach gefragt wirst.
+Öffne das Unity-Projekt erneut — Unity erkennt die Änderungen automatisch und importiert alles neu.
