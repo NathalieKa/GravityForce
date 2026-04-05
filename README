@@ -1,3 +1,16 @@
+GravityForce
+
+Beschreibung
+GravityForce ist ein Mobile Game, das als Uni-Projekt im Modul Mobile Applikation in einem 3er-Team mit Unity entwickelt wurde.
+
+Über das Spiel
+GravityForce ist ein 2D-Geschicklichkeitsspiel, in dem der Spieler eine Rakete durch ein Höhlensystem steuert. Das Ziel ist es, Pakete einzusammeln und sicher zum Checkpoint zu bringen, während Hindernisse umflogen und gegnerische Angriffe abgewehrt werden.
+
+Features:
+
+Drei Schwierigkeitsstufen (Easy, Medium, Hard) mit unterschiedlicher Gegnerstärke und Levelgestaltung
+Zwei Steuerungsoptionen: virtuelle Buttons oder Bewegungssensoren
+Steigende Herausforderung — je weiter man kommt, desto wichtiger werden präzise Steuerung und schnelle Reaktionen
 Voraussetzungen
 
 Unity (Version 2022.3.52f1)
